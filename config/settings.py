@@ -117,8 +117,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-IPSTACK_ACCESS_KEY = '9140b64236cf03fc6a6145fb41603ae2'
-
+IPSTACK_ACCESS_KEY = os.getenv('IPSTACK_ACCESS_KEY')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -168,9 +167,9 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
 
-TWILIO_ACCOUNT_SID = 'AC90597e685478e1e508eccb49559a7dd8'
-TWILIO_AUTH_TOKEN = '90077d9b6caf14adc124b00267bf7d26'
-TWILIO_FROM_NUMBER = '+17722423567'
+TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -178,4 +177,3 @@ EMAIL_HOST = 'smtp.gmail.com'  # Gmail SMTP server
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'anvardiyora.00@gmail.com'
-EMAIL_HOST_PASSWORD = '21061983anvarDev$'
