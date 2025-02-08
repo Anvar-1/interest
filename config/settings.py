@@ -14,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv_path = Path(__file__).resolve().parent / 'config' / '.env'
 load_dotenv(dotenv_path)
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
 
@@ -175,6 +176,7 @@ SIMPLE_JWT = {
 
 TWILIO_ACCOUNT_SID = config('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = config('TWILIO_AUTH_TOKEN')
+TWILIO_FROM_NUMBER = config('TWILIO_FROM_NUMBER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 
