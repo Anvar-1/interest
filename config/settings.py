@@ -1,29 +1,20 @@
 import os
-from datetime import timedelta
-from pathlib import Path
 from decouple import config
-# from dotenv import load_dotenv
+from dotenv import load_dotenv  # .env faylini o'qish uchun
+from pathlib import Path
+from datetime import timedelta
+
+# .env faylini yuklash
+dotenv_path = Path(__file__).resolve().parent / '.env'
+load_dotenv(dotenv_path)  # Bu bilan .env faylini o'qiymiz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-dotenv_path = Path(__file__).resolve().parent / 'config' / '.env'
-# load_dotenv(dotenv_path)
-
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
-
-ALLOWED_HOSTS = []
-
-
+# .env faylidan ma'lumotlarni o'qish
+SECRET_KEY = config('SECRET_KEY')  # .env faylidan SECRET_KEY o'qiladi
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[])
 # Application definition
 
 INSTALLED_APPS = [
