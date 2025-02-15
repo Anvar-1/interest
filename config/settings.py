@@ -2,7 +2,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 dotenv_path = Path(__file__).resolve().parent / 'config' / '.env'
-load_dotenv(dotenv_path)
+# load_dotenv(dotenv_path)
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
