@@ -12,7 +12,7 @@ load_dotenv(dotenv_path)  # Bu bilan .env faylini o'qiymiz
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # .env faylidan ma'lumotlarni o'qish
-SECRET_KEY = config('SECRET_KEY', default='default-secret-key')  # Agar o'zgaruvchi topilmasa, default qiymat ishlaydi.
+SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[])
 # Application definition
