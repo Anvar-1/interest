@@ -44,7 +44,7 @@ class User(AbstractUser):
     username = None
 
     USERNAME_FIELD = 'phone'
-    REQUIRED_FIELDS = ['full_name']
+    REQUIRED_FIELDS = []
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
