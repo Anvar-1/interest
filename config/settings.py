@@ -1,19 +1,16 @@
 import os
 from decouple import config
-from dotenv import load_dotenv  # .env faylini o'qish uchun
+from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
 
-# .env faylini yuklash
 dotenv_path = Path(__file__).resolve().parent / '.env'
-load_dotenv()  # Bu bilan .env faylini o'qiymiz
+load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# .env faylidan ma'lumotlarni o'qish
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = os.environ.get('DEBUG')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'anvar')
+DEBUG = os.environ.get('DEBUG', 1)
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
