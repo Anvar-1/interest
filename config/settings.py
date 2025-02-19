@@ -1,6 +1,6 @@
 import os
 from decouple import config
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from pathlib import Path
 from datetime import timedelta
 
