@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from .location import get_location
 from .serializers import UserRegisterSerializer, UserSerializer, UserLoginSerializer, PasswordResetSerializer, \
     PasswordChangeSerializer
 from .models import User
@@ -16,18 +18,21 @@ class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
 
     def perform_create(self, serializer):
-        # IP manzilini olish
-        ip = self.request.META.get('REMOTE_ADDR')
+        ip_address = self.request.META.get('HTTP_X_FORWARDED_FOR', self.request.META.get('REMOTE_ADDR'))
+        location_data = get_location(ip_address)
 
-        # Proksi-serverlar uchun tekshirish
-        if 'HTTP_X_FORWARDED_FOR' in self.request.META:
-            ip = self.request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+        if location_data and location_data['status'] == 'success':
+            city = location_data.get('city')
+            country = location_data.get('country')
+            # Qo'shimcha ma'lumotlar bilan ishlash
+        else:
+            city = country = None
 
-        # Foydalanuvchini yaratish va IP manzilini saqlash
         user = serializer.save()
-        user.ip_address = ip  # IP manzilini saqlash
+        user.ip_address = ip_address  # IP manzilini saqlash
+        user.city = city  # Agar kerak bo'lsa, shaharni saqlash
+        user.country = country  # Agar kerak bo'lsa, mamlakatni saqlash
         user.save()
-
     # def get_country_from_ip(self, ip_address):
     #     access_key = settings.IPSTACK_ACCESS_KEY  # API kalitini olamiz
     #     url = f'http://api.ipstack.com/{ip_address}?access_key={access_key}'
