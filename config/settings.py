@@ -12,9 +12,9 @@ load_dotenv(dotenv_path)  # Bu bilan .env faylini o'qiymiz
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # .env faylidan ma'lumotlarni o'qish
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')# Application definition
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DEBUG')
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
