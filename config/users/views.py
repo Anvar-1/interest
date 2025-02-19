@@ -16,27 +16,34 @@ class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
 
     def perform_create(self, serializer):
+        # IP manzilini olish
+        ip = self.request.META.get('REMOTE_ADDR')
+
+        # Proksi-serverlar uchun tekshirish
+        if 'HTTP_X_FORWARDED_FOR' in self.request.META:
+            ip = self.request.META['HTTP_X_FORWARDED_FOR'].split(',')[0]
+
+        # Foydalanuvchini yaratish va IP manzilini saqlash
         user = serializer.save()
-        user.ip_address = self.request.META.get('REMOTE_ADDR')
-        user.country = self.get_country_from_ip(user.ip_address)
+        user.ip_address = ip  # IP manzilini saqlash
         user.save()
 
-    def get_country_from_ip(self, ip_address):
-        access_key = settings.IPSTACK_ACCESS_KEY  # API kalitini olamiz
-        url = f'http://api.ipstack.com/{ip_address}?access_key={access_key}'
-
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                data = response.json()
-                print(data)  # Olingan ma'lumotlarni ko'rsatish
-                return data.get('country_name')  # Davlat nomini qaytarish
-            else:
-                print(f"Xatolik: {response.status_code} - {response.text}")
-                return None
-        except Exception as e:
-            print(f"Xatolik yuz berdi: {str(e)}")  # Xatolik haqida ma'lumot
-            return None
+    # def get_country_from_ip(self, ip_address):
+    #     access_key = settings.IPSTACK_ACCESS_KEY  # API kalitini olamiz
+    #     url = f'http://api.ipstack.com/{ip_address}?access_key={access_key}'
+    #
+    #     try:
+    #         response = requests.get(url)
+    #         if response.status_code == 200:
+    #             data = response.json()
+    #             print(data)  # Olingan ma'lumotlarni ko'rsatish
+    #             return data.get('country_name')  # Davlat nomini qaytarish
+    #         else:
+    #             print(f"Xatolik: {response.status_code} - {response.text}")
+    #             return None
+    #     except Exception as e:
+    #         print(f"Xatolik yuz berdi: {str(e)}")  # Xatolik haqida ma'lumot
+    #         return None
 
 
 class ProtectedView(APIView):
