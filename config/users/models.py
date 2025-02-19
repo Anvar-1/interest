@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -21,7 +21,7 @@ class UserManager(BaseUserManager):
         return self.create_user(phone, full_name, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     GENDER_CHOICES = [
         ('male', 'Erkak'),
         ('female', 'Ayol'),
