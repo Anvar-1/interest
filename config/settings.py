@@ -6,7 +6,7 @@ from datetime import timedelta
 
 # .env faylini yuklash
 dotenv_path = Path(__file__).resolve().parent / '.env'
-load_dotenv(dotenv_path)  # Bu bilan .env faylini o'qiymiz
+load_dotenv()  # Bu bilan .env faylini o'qiymiz
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
