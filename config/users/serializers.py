@@ -36,6 +36,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "id": instance.id,
             "full_name": instance.full_name,
             "phone": instance.phone,
+            'email': instance.email,
             "password": instance.password,
             "ip_address": instance.ip_address,
             "country": instance.country,
@@ -47,7 +48,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'full_name', 'phone', 'ip_address', 'interests', 'gender', 'is_active', 'is_staff']
+        fields = ['id', 'full_name', 'phone', 'email', 'ip_address', 'interests', 'gender', 'is_active', 'is_staff']
         extra_kwargs = {
             'ip_address': {'read_only': True},
             'interests': {'allow_blank': True},
