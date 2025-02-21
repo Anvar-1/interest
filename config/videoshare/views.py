@@ -25,3 +25,4 @@ class RecommendationsView(generics.ListAPIView):
         user_id = self.kwargs['user_id']
         user_profile = UserProfile.objects.get(user_id=user_id)
         return Video.objects.filter(interests__in=user_profile.interests.all()).distinct()
+
