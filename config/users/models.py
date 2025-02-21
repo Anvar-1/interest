@@ -32,6 +32,7 @@ class User(AbstractUser):
 
     full_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     interests = models.TextField(null=True, blank=True)
     country = models.CharField(max_length=50, null=True, blank=True)
