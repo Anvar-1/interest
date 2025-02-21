@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'config.users',
     'config.videoshare',
+    'config.user_profile',
 ]
 
 MIDDLEWARE = [

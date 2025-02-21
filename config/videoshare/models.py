@@ -12,7 +12,7 @@ class Video(models.Model):
     description = models.TextField()
     video_file = models.FileField(upload_to='videos/')
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
-    interests = models.ManyToManyField(Interest, blank=True)
+    interests = models.ManyToManyField(Interest, blank=True, related_name='video_interests')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -20,9 +20,14 @@ class Video(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    interests = models.ManyToManyField(Interest, blank=True)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='video_user_profile'
+    )
+    interests = models.ManyToManyField(Interest, blank=True, related_name='video_user_profiles')
 
     def __str__(self):
         return self.user.username
+
 
