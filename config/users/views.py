@@ -94,6 +94,11 @@ class UserDelete(generics.DestroyAPIView):
     queryset = User.objects.all()
     permission_classes = [permissions.IsAuthenticated]
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({"message": "Muvaffaqiyatli o'chirildi."}, status=status.HTTP_204_NO_CONTENT)
+
 
 class LogoutView(APIView):
     def post(self, request):
