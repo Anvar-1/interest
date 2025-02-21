@@ -10,7 +10,7 @@ class VideoListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)  # Foydalanuvchini video egasi sifatida saqlash
+        serializer.save(user=self.request.user)
 
 class VideoDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Video.objects.all()

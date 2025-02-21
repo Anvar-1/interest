@@ -20,11 +20,7 @@ class Video(models.Model):
         return self.title
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='video_user_profile'
-    )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='video_user_profile')
     interests = models.ManyToManyField(Interest, blank=True, related_name='video_user_profiles')
 
     def __str__(self):
