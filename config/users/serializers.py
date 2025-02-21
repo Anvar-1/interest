@@ -8,10 +8,11 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     phone = serializers.CharField(max_length=15)
     password = serializers.CharField(write_only=True, min_length=8)
     gender = serializers.ChoiceField(choices=User.GENDER_CHOICES)
+    email = serializers.EmailField(required=True)  # Email maydoni kiritildi
 
     class Meta:
         model = User
-        fields = ['id', 'full_name', 'phone', 'password', 'gender']
+        fields = ['full_name', 'phone', 'email', 'password', 'gender']
         extra_kwargs = {
             'password': {'write_only': True},
             'full_name': {'required': True},
@@ -20,11 +21,12 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # Telefon raqamini tekshirish
         if User.objects.filter(phone=validated_data['phone']).exists():
-            raise serializers.ValidationError({"phone": "Bu telefon raqami allaqachon ro'yxatdan o'tgan."})
+            raise serializers.ValidationError({"phone": "Bu telefon raqami allaqon ro'yxatdan o'tgan."})
 
         user = User.objects.create_user(
             phone=validated_data['phone'],
             full_name=validated_data['full_name'],
+            email=validated_data['email'],  # Emailni kiritish
             password=validated_data['password'],
             gender=validated_data['gender']
         )
@@ -61,6 +63,7 @@ class PasswordResetSerializer(serializers.Serializer):
         if not User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Bu email manzil bilan foydalanuvchi topilmadi.")
         return value
+
 
     def save(self):
         email = self.validated_data['email']
