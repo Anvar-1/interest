@@ -3,8 +3,8 @@ from django.db import models
 from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserRoleManager(BaseUserManager):
-
     def create_user(self, phone, password=None, **extra_fields):
+        """Yangi foydalanuvchini yaratish."""
         if not phone:
             raise ValueError("Telefon raqam kiritilishi shart")
         extra_fields.setdefault("is_active", True)
@@ -14,16 +14,19 @@ class UserRoleManager(BaseUserManager):
         return user
 
     def create_superuser(self, phone, password=None, **extra_fields):
+        """Superfoydalanuvchini yaratish."""
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
+
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser uchun `is_staff=True` bo‘lishi shart")
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser uchun `is_superuser=True` bo‘lishi shart")
+
         return self.create_user(phone, password, **extra_fields)
 
-
 class User(AbstractUser):
+    """Foydalanuvchi modeli."""
     GENDER_CHOICES = [
         ('male', 'Erkak'),
         ('female', 'Ayol'),
@@ -42,14 +45,19 @@ class User(AbstractUser):
     is_superuser = models.BooleanField(default=False)
 
     objects = UserRoleManager()
-    username = None
+    username = None  # Username maydoni mavjud emas
 
-    USERNAME_FIELD = 'phone'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'phone'  # Telefon raqami foydalanuvchi nomi sifatida ishlatiladi
+    REQUIRED_FIELDS = ['email', 'full_name']  # Ro'yxatdan o'tish uchun zarur maydonlar
 
     def tokens(self):
+        """JWT tokenlarini yaratish."""
         refresh = RefreshToken.for_user(self)
         return {
             'refresh': str(refresh),
             'access': str(refresh.access_token),
         }
+
+    def __str__(self):
+        """Foydalanuvchini ko'rsatish uchun."""
+        return self.full_name or self.phone
