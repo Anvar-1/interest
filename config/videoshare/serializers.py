@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Video, Interest, UserProfile
+from .models import Video, Interest, UserProfile, Post
+
 
 class InterestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,3 +18,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['user', 'interests']
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'user', 'image', 'video', 'created_at']

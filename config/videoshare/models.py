@@ -27,3 +27,30 @@ class UserProfile(models.Model):
         return self.user.username
 
 
+
+class Post(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='posts/')
+    video = models.FileField(upload_to='videos/', blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_likes_count(self):
+        return self.likes.count()  # Postga berilgan like'lar soni
+
+    def get_likes_users(self):
+        return [like.user.username for like in self.likes.all()]  # Like bergan foydalanuvchilar ro'yxati
+
+    def get_comments_count(self):
+        return self.comments.count()  # Postga qoldirilgan izohlar soni
+
+    def get_comments(self):
+        return [(comment.user.username, comment.content) for comment in self.comments.all()]  # Izohlar ro'yxati
+
+
+class SearchHistory(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    query = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username}: {self.query} at {self.created_at}"
