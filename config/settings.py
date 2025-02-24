@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     'config.users',
     'config.videoshare',
     'config.user_profile',
-    'config.posts',
 ]
 
 MIDDLEWARE = [
