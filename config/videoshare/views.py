@@ -8,6 +8,7 @@ from ..users.serializers import UserSerializer
 
 User = get_user_model()
 
+
 class SearchView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -18,7 +19,9 @@ class SearchView(generics.GenericAPIView):
 
         # Video postlarni qidirish
         posts = Post.objects.filter(video__icontains=query)
-        users = User.objects.filter(username__icontains=query)
+
+        # Foydalanuvchilarni qidirish
+        users = User.objects.filter(full_name__icontains=query)  # 'username' o'rniga 'full_name' yoki boshqa maydon
 
         # Qidirish tarixini saqlash
         SearchHistory.objects.create(user=request.user, query=query)
